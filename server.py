@@ -64,11 +64,11 @@ def user_profile():
     return app.send_static_file('user_profile.png')
 
 @app.route('/review')
-@login_is_required # Decorator to check if the user is logged in
+# @login_is_required # Decorator to check if the user is logged in
 def review():
-    email = session.get('email').strip()
-    user_handle = get_user_handle(email)
-    return render_template('review.html', user_handle=user_handle)
+    # email = session.get('email').strip()
+    # user_handle = get_user_handle(email)
+    return render_template('review.html') # user_handle=user_handle
 
 @app.route('/get_reviews', methods=['GET'])
 def get_reviews():
