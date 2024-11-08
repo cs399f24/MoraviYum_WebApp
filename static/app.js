@@ -15,6 +15,16 @@ function submit() {
             user_handle: user_handle
         }),
     })
+
+    fetch('get_user_handle', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_handle: user_handle
+        }),
+        })
     //var path = window.location
     //var endpoint = "review"
     //return `${path}.origin/${endpoint}`

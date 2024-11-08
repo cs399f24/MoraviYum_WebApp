@@ -23,7 +23,7 @@ if not os.getenv('FLASK_SECRET_KEY'):
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
-# OAUTH CONFIG
+'''# OAUTH CONFIG
 oauth = OAuth(app)
 oauth.register(
     name='google',
@@ -40,16 +40,16 @@ oauth.register(
 )
 
 # Google OAuth configuration
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')'''
 
-def login_is_required(function):
+'''def login_is_required(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         if 'email' not in session:  # Check if the user is logged in
             return abort(401)  # If not, return 401 Unauthorized
         else:
             return function(*args, **kwargs)
-    return wrapper
+    return wrapper'''
 
 @app.route('/')
 def index():
@@ -68,7 +68,11 @@ def user_profile():
 def review():
     # email = session.get('email').strip()
     # user_handle = get_user_handle(email)
-    return render_template('review.html') # user_handle=user_handle
+    # user_handle = session.get('user_handle')
+    # print(session)
+    user_handle = request.args.get('user_handle')
+    print("USER HANDLE = ", user_handle)
+    return render_template('review.html', user_handle=user_handle) # user_handle=user_handle
 
 @app.route('/get_reviews', methods=['GET'])
 def get_reviews():
@@ -192,7 +196,7 @@ def submit_review():
 
     return jsonify({'message': 'Review submitted successfully!'}), 200
 
-def get_user_handle(email):
+'''def get_user_handle(email):
     cursor, connection = connectToMySQL()
 
     use_db = f"USE {os.getenv('MYSQL_DATABASE')}"
@@ -208,17 +212,17 @@ def get_user_handle(email):
         print(f"No user_handle found for email: {email}")
         abort(404) 
     else:
-        return user_handle[0]
+        return user_handle[0]'''
 
 @app.route('/new_user')
-@login_is_required # Decorator to check if the user is logged in
+# @login_is_required # Decorator to check if the user is logged in
 def new_user():
-    user_name = session.get('name')
+    #user_name = session.get('name')
     print("we have reached this point SUCCESSFULLY")
-    return render_template('new_user.html', user_name=user_name)
+    return render_template('new_user.html') # user_name=user_name
 
-@app.route('/store_user_handle', methods=['POST'])
-def store_user_handle():
+@app.route('/store_user_handle', methods = ['POST']) 
+def store_user_handle(): 
     user_handle = request.get_json()
     user_handle = user_handle['user_handle']
     cursor, connection = connectToMySQL()
@@ -226,15 +230,26 @@ def store_user_handle():
     use_db = f"USE {os.getenv('MYSQL_DATABASE')}"
     cursor.execute(use_db)
 
-    cursor.execute("INSERT INTO usernames (email, user_handle) VALUES (%s, %s)", (session['email'], user_handle))
+    # cursor.execute("INSERT INTO usernames (email, user_handle) VALUES (%s, %s)", (session['email'], user_handle))
+    cursor.execute("INSERT INTO usernames (user_handle) VALUES (%s)", (user_handle,))
+
 
     connection.commit()
     cursor.close()
     connection.close()
+    
+    print("USER HANDLE IN STORE", user_handle)
 
-    return jsonify({'message': 'User handle saved successfully!'}), 200
+    return redirect(f'/review?user_handle={user_handle}')
 
-@app.route('/login')
+@app.route('/get_user_handle', methods=['POST'])
+def get_user_handle():
+    user_handle = request.get_json()
+    user_handle = user_handle['user_handle']
+    print(user_handle)
+    return user_handle
+
+'''@app.route('/login')
 def login():
     google = oauth.create_client('google') # Create/get the google client above
     redirect_uri = url_for('authorize', _external=True)
@@ -244,12 +259,12 @@ def login():
 def logout():
     for key in list(session.keys()): # Clear all keys from the session data
         session.pop(key)
-    return redirect('/')
+    return redirect('/')'''
 
 @app.route('/authorize')
 def authorize():
    
-    google = oauth.create_client('google') # Create/get the google client above
+    '''google = oauth.create_client('google') # Create/get the google client above
     token = oauth.google.authorize_access_token()
     resp = oauth.google.get('userinfo')
     user_info = resp.json()
@@ -295,7 +310,8 @@ def authorize():
     if session.get('is_new_user'):
         return redirect('/new_user')
     else:
-        return redirect('/review')
+        return redirect('/review')'''
+    return redirect('/new_user')
     
 def connectToMySQL():
     '''

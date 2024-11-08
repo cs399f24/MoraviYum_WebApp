@@ -54,7 +54,7 @@ dropdown2.addEventListener('mouseleave', () => {
     dropdown.style.display = 'none';
 })
 
-// Array to hold review data (this would typically come from a database)
+// Array to hold review data
 const reviews = [];
 
 // Function to display reviews in the review list
@@ -173,7 +173,7 @@ function populateReviewTable(reviews) {
     reviewList.appendChild(table);
 }
 
-profileimg.addEventListener('click', () => {
+/*profileimg.addEventListener('click', () => {
     console.log("clicked the img")
     logout_button.style.display = 'block';
 })
@@ -188,5 +188,5 @@ logout_button.addEventListener('click', () => {
 })
 profileimg.addEventListener('mouseleave', () => {
     logout_button.style.display = 'none';
-})
+})*/
 

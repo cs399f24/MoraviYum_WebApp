@@ -4,14 +4,14 @@ CREATE DATABASE IF NOT EXISTS MoraviYum;
 USE MoraviYum;
 
 -- Create tables
-CREATE TABLE IF NOT EXISTS session ( 
-    user_id VARCHAR(50),
-    username VARCHAR(50),
-    email VARCHAR(50)
-);
+-- CREATE TABLE IF NOT EXISTS session ( 
+    -- user_id VARCHAR(50),
+    -- username VARCHAR(50),
+    -- email VARCHAR(50)
+-- );
 
 CREATE TABLE IF NOT EXISTS usernames (
-    email VARCHAR(50),
+    -- email VARCHAR(50),
     user_handle VARCHAR(50)
 );
 
