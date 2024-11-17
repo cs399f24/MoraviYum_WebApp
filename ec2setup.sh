@@ -1,43 +1,14 @@
 #!/bin/bash
 
-# Step 1: Install MariaDB
-echo "Installing MariaDB..."
-sudo dnf install -y mariadb105-server
+mysql_password=$(aws secretsmanager get-secret-value \
+    --secret-id arn:aws:secretsmanager:us-east-1:062080672614:secret:prod/moraviyum/rds-3fB00w \
+    --query 'SecretString' \
+    --output text | jq -r '.password')
 
-# Start MariaDB service
-echo "Starting MariaDB service..."
-sudo systemctl start mariadb
-
-# Secure MySQL installation
-echo "Securing MariaDB installation..."
-echo "Creating MariaDB user \"root\"..."
-
-read -sp "Create a password for \"root\" user: " root_password
-sudo mysql_secure_installation <<EOF
-
-# Enter password for "root" when prompted
-$root_password
-# Switch to socket authentication
-n
-# Change root password
-n
-# Remove anonymous users
-Y
-# Disallow root login remotely
-Y
-# Remove test database and access to it
-Y
-# Reload privilege tables
-Y
-EOF
-
-# Step #2: Create the 'MoraviYum' database.
-echo ""
-echo "MariaDB user \"root\" has been created."
-
-echo ""
-echo "Allowing \"root\" user to connect to MariaDB..."
-sudo mysql -u root -p -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$root_password';"
+mysql_username=$(aws secretsmanager get-secret-value \
+    --secret-id arn:aws:secretsmanager:us-east-1:062080672614:secret:prod/moraviyum/rds-3fB00w \
+    --query 'SecretString' \
+    --output text | jq -r '.user_name')
 
 echo ""
 echo "Populating the database..."
@@ -45,17 +16,12 @@ cd database
 
 echo ""
 echo "Creating tables..."
-mysql -u root -p < create.sql
+mysql -u $mysql_username -p$mysql_password < create.sql
 
 echo ""
 echo "Inserting data..."
-mysql -u root -p MoraviYum < insert.sql
+mysql -u $mysql_username -p$mysql_password MoraviYum < insert.sql
 cd ..
-
-echo ""
-echo "Restarting and enabling MariaDB service..."
-sudo systemctl restart mariadb
-sudo systemctl enable mariadb
 
 # Step #4: Check if virtual environment exists
 if [ ! -d ".venv" ]; then
@@ -73,19 +39,16 @@ pip install -r requirements.txt
 echo ""
 echo "Creating .env file..."
 
-read -sp "Enter your flask secret key: " flask_secret_key
+flask_secret_key=$(python3 -c "import secrets; print(secrets.token_hex())")
 echo "FLASK_SECRET_KEY=\"$flask_secret_key\"" >> .env
 echo ""
 
 echo ""
 echo "Creating MariaDB connection details..."
-read -p "Enter your MariaDB username: " mysql_username
 echo "MYSQL_USERNAME=\"$mysql_username\"" >> .env
-
-read -sp "Enter your MariaDB password: " mysql_password
 echo "MYSQL_PASSWORD=\"$mysql_password\"" >> .env
 
-echo "MYSQL_HOST=\"localhost\"" >> .env
+echo "MYSQL_HOST=\"moraviyum-database.c6ear6iqzuqu.us-east-1.rds.amazonaws.com\"" >> .env
 
 echo "MYSQL_DATABASE=\"MoraviYum\"" >> .env
 
