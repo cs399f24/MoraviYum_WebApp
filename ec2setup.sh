@@ -44,7 +44,7 @@ echo "FLASK_SECRET_KEY=\"$flask_secret_key\"" >> .env
 echo ""
 
 echo ""
-echo "Creating MariaDB connection details..."
+echo "Creating RDS connection details..."
 echo "MYSQL_USERNAME=\"$mysql_username\"" >> .env
 echo "MYSQL_PASSWORD=\"$mysql_password\"" >> .env
 
