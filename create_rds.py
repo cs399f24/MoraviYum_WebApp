@@ -5,15 +5,15 @@ import os
 dotenv.load_dotenv()
 
 # Variables for database configuration
-RDSUSERNAME = os.getenv('RDS_USERNAME')
-RDSPASSWORD = os.getenv('RDS_PASSWORD')
-RDSDBNAME = os.getenv('RDS_DB_NAME')
+RDS_USERNAME = os.getenv('RDS_USERNAME')
+RDS_PASSWORD = os.getenv('RDS_PASSWORD')
+RDS_DB_NAME = os.getenv('RDS_DB_NAME')
 SECURITY_GROUP_ID = os.getenv('SECURITY_GROUP_ID')
 
 db_identifier = "moraviyum"
-master_username = RDSUSERNAME
-master_password = RDSPASSWORD
-db_name = RDSDBNAME
+master_username = RDS_USERNAME
+master_password = RDS_PASSWORD
+db_name = RDS_DB_NAME
 db_instance_class = "db.t3.micro"
 engine = "mysql"
 public_access = True
