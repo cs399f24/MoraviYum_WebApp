@@ -8,6 +8,7 @@ dotenv.load_dotenv()
 RDSUSERNAME = os.getenv('RDS_USERNAME')
 RDSPASSWORD = os.getenv('RDS_PASSWORD')
 RDSDBNAME = os.getenv('RDS_DB_NAME')
+SECURITY_GROUP_ID = os.getenv('SECURITY_GROUP_ID')
 
 db_identifier = "moraviyum"
 master_username = RDSUSERNAME
@@ -34,7 +35,7 @@ try:
         BackupRetentionPeriod=backup_retention,
         StorageType=storage_type,
         PubliclyAccessible=public_access,
-        VpcSecurityGroupIds=['default'],
+        VpcSecurityGroupIds=[SECURITY_GROUP_ID],
         DBName=db_name,
         MultiAZ=False,
         AutoMinorVersionUpgrade=True
