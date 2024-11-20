@@ -14,7 +14,6 @@ s3_client.create_bucket(Bucket=s3_bucket_name)
 print(f"Bucket '{s3_bucket_name}' created successfully in us-east-1.")
 
 # Update bucket ACL to disable ACLs (Object Ownership is defaulted to Bucket Owner Enforced)
-s3_client.put_bucket_acl(Bucket=s3_bucket_name, ACL='private')
 print("Bucket ACLs disabled (private).")
 
 # Turn off "Block all public access"
