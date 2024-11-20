@@ -10,7 +10,7 @@ rds_client = boto3.client('rds', region_name='us-east-1')
 try:
     response = rds_client.delete_db_instance(
         DBInstanceIdentifier=db_identifier,
-        SkipFinalSnapshot=False
+        SkipFinalSnapshot=True
     )
     print(f"RDS instance '{db_identifier}' deletion initiated. Status: {response['DBInstance']['DBInstanceStatus']}")
 except Exception as e:
