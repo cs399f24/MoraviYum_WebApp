@@ -2,10 +2,7 @@
 
 An online web application designed for Moravian University students to help each other out by sharing their thoughts and opinions on the various foods provided on campus!
 
-Project designed for the Lehigh Valley Collegiate Hackathon 2024.
-
-## Video Demonstration
-[MoraviaYum Demo - Lehigh Valley Hackathon 2024](https://youtu.be/-onicEIKR9M)
+Project designed for *CSCI 399: Cloud Computing*
 
 ## Contributers
 - [Christine Colvin](https://github.com/christinecolvin)
