@@ -36,7 +36,7 @@ def get_default_vpc():
 def create_security_group(vpc_id):
     try:
         response = ec2_client.create_security_group(
-            GroupName="NewRDSAccessGroup",
+            GroupName="MoraviYumRDSGroup",
             Description="Security group for RDS instance",
             VpcId=vpc_id
         )
