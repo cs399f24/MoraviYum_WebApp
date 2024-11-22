@@ -25,19 +25,46 @@ Once a vendor is selected, they can then select the food they want to leave a re
 
 ![reviewpage](MoraviYum_review.png)
 
-## What Was Used
-- HTML, CSS, and JavaScript were used for the UI
-- A MySQL database is used to store user accounts, food data, and review information
-- Images are stored in an S3 bucket
-- Google OAUTH is used for ensuring only Moravian students are allowed to sign-in
+# AWS EC2 Instance Installation Tutorial (without Docker)
 
-## Accomplishments
-- Laying the foundations and functionality of the vendor/food selection and review
-- Successful set-up of the database with working images that correspond to each food item
-- Successful implementation of a user login/logout feature through OAUTH
+### 1. Create a new EC2 instance
+If you haven't already, create a new EC2 instance on [Amazon Web Services](https://aws.amazon.com/?nc2=h_lg).
 
-## Future Plans
-- A filtering feature to filter foods by rating, prices, calories, etc.
-- A "keyword" feature that lets users attribute certain descriptions to certain foods (ex: "PRO: Good price", "CON: Too many calories")
+Once created, `ssh` into the instance in a [Command Line Interface](https://en.wikipedia.org/wiki/Command-line_interface#:~:text=A%20command%2Dline%20interface%20\(CLI,interface%20available%20with%20punched%20cards.) with the following command:
 
-hi
+```
+ssh -i ~/.ssh/labsuser.pem ec2-user@<PUBLIC IPv4 ADDRESS HERE>
+```
+
+### 2. Clone the repo
+Once you are all set up, install `git` in the EC2 instance with the following command:
+
+```
+sudo yum install -y git
+```
+
+Afterwards, press the green **<> Code** button to gain a link to clone the repository.
+
+Then, in your Command Line Interface, clone the repository with the following command:
+
+```
+git clone https://github.com/cs220s24/trivia-discord-bot.git
+```
+
+### 3. Run `setup_bot_EC2.sh`
+Now, enter the **`trivia-discord-bot`** repository in the EC2 instance.
+
+Run the following command:
+
+```
+sh setup_bot_EC2.sh
+```
+
+Follow the instruction prompts given in the terminal. This will complete all the necessary set-up for the bot to run.
+
+### 4. Run the bot
+The bot should now successfully be up and running on the EC2 instance!
+
+You can test this by posting the message **`ping`**. The bot should respond with **`"pong!"`**.
+
+To play a brief quiz with the bot, post the message **`start quiz`**.
