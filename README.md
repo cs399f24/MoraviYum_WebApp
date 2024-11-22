@@ -47,7 +47,8 @@ print(secrets.token_hex())
 - A string of text should appear, copy and paste this string in between the quotation marks of FLASK_SECRET_KEY within your .env file
 
 - Next, reopen your terminal and cd into the directory, run the command:
-  ```python server.py
+  ```
+  python server.py
   ```
 
 - copy and paste the http://127.0.0.1:8000 into your favorite web browser 
@@ -85,11 +86,14 @@ Now, enter the **`moraviyum_WebApp`** repository in the EC2 instance.
 Run the following command:
 
 ```
-___
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements
+python server.py
 ```
 
 Follow the instruction prompts given in the terminal. This will complete all the necessary set-up for the bot to run.
 
-### 4. Run the bot
+### 4. Run the program
 The bot should now successfully be up and running on the EC2 instance!
 
