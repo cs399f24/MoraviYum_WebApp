@@ -25,7 +25,7 @@ Once a vendor is selected, they can then select the food they want to leave a re
 
 ![reviewpage](MoraviYum_review.png)
 
-### 2. Dependencies 
+# Local Deployment
 There are multiple ways to install any dependencies that are not installed on your system.
 - You can use this command in your terminal with the blank replacing the dependency not in access: 
 ```
