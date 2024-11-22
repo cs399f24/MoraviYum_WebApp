@@ -6,9 +6,9 @@ import os
 rds_client = boto3.client('rds-data', region_name='us-east-1')
 
 # Database and secret configuration
-DB_CLUSTER_ARN = os.environ['DB_CLUSTER_ARN']
-SECRET_ARN = os.environ['SECRET_ARN']
-RDS_DB_NAME = os.environ['RDS_DB_NAME']
+DB_CLUSTER_ARN = os.getenv('DB_CLUSTER_ARN')
+SECRET_ARN = os.getenv('SECRET_ARN')
+RDS_DB_NAME = os.getenv('RDS_DB_NAME')
 
 def lambda_handler(event, context):
     """
