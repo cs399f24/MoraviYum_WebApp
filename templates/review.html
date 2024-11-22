@@ -96,47 +96,54 @@
     }
     </style>
 
-    <div id = "scrollable-container" style="display: none;" class = "scrollable-container">
-        <div id="review_container" style="display: none;"  class="fade-in">
+    <div id="scrollable-container" class="scrollable-container">
+        <div id="review_container" class="review-container fade-in">
             <h2 id="review_header">Reviews</h2>
             <div id="review_list">
                 <!-- Reviews will be added here -->
             </div>
         </div>
     </div>
+
     <!--<button id="ShowReviewsButton">Show reviews</button>
     <button id="backtomenubutton">Back to menus</button>-->
 
-    <button id="show_review_form" style="display: none;" >Add Review</button>
+    <!-- Add Review button -->
+    <button id="show_review_form_button">Add Review</button>
 
-    
-    <form id="reviewForm" style="display: none;" >
-    <input type="hidden" id="user_id" value="{{ user_handle }}">
+    <!-- Review form container (initially hidden) -->
+    <div id="review_form_container" class="review-form-container" style="display: none;">
+        <form id="review_form">
+            <label for="food">Food ID:</label>
+            <input type="text" id="food" required><br>
 
-    <label for="food">Food ID:</label>
-    <input type="text" id="food" required><br>
+            <label for="rating">Rating (1-5):</label>
+            <input type="number" id="rating" min="1" max="5" required><br>
 
-    <label for="rating">Rating (1-5):</label>
-    <input type="number" id="rating" min="1" max="5" required><br>
+            <label for="review_text">Review:</label>
+            <textarea id="review_text" rows="4" required></textarea><br>
 
-    <label for="review_text">Review:</label>
-    <textarea id="review_text" style="display: none;" rows="4" required></textarea><br>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
 
-    <button type="submit">Submit Review</button>
-    </form>
+    <!-- Image container 2 (initially hidden) -->
+    <div id="image_container2" style="display: none;">
+        <img src="/user_profile.png" alt="user_profile" id="user_profile_image" style="width: 100px; height: auto;">
+    </div>
 
- <!-- Image container 2 (initially hidden) -->
- <div id="image_container2" style="display: none;">
-    <img src="/user_profile.png" alt="user_profile" id="user_profile_image" style="width: 100px; height: auto;">
-</div>
-
-<div id="logout_button_container" style="display: none; margin-top: 10px;">
-    <button id="logout_button">Log Out</button>
-</div>
+    <div id="logout_button_container" style="display: none; margin-top: 10px;">
+        <button id="logout_button">Log Out</button>
+    </div>
 
 
 
     <script>
+        document.getElementById('show_review_form_button').addEventListener('click', function() {
+            document.getElementById('review_form_container').style.display = 'block';
+            this.style.display = 'none';  // Hide the "Add Review" button
+        });
+
         // Wait for 3 seconds, then switch from the welcome panel to the dropdown panel
         setTimeout(function() {
             // Hide the welcome panel

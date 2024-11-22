@@ -30,6 +30,24 @@ body {
   }
 }
 
+.content {
+  text-align: center;
+  z-index: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgb(5, 50, 109) 10%, white 90%);
+  pointer-events: none; /* Ensure it doesn't block clicks */
+  z-index: -1; /* Place it behind the content */
+  
+}
+
 .header {
     display: flex;
     width: 100%;
@@ -94,7 +112,18 @@ h2 {
     align-items: top;
 }
 
+.dropdown-button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
 
+.dropdown-select {
+    display: none;
+}
 
 .dropdown-item:hover select {
   display: block; /* Show dropdown select on hover */
@@ -153,6 +182,7 @@ h2 {
 .fade-in {
     opacity: 0;
     animation: fade-in 1s ease-in-out forwards;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fade-in {
@@ -164,6 +194,15 @@ h2 {
 @keyframes fade-out {
     0% {
         opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 
@@ -303,4 +342,109 @@ select {
   position: absolute;
   top: 11%;
   right: 1.5%
+}
+
+.scrollable-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9; /* Non-transparent background color */
+}
+
+.review-container {
+    background-color: #ffffff; /* Non-transparent background color */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.menu-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.food-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.food-details {
+    font-size: 14px;
+    color: #555;
+}
+
+.food-image {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.review-table {
+    width: 100%;  /* Table takes full width of the container */
+}
+
+#review_header {
+    color: #000000;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.review-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+#review_form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#review_form label {
+    margin-top: 10px;
+}
+
+#review_form input,
+#review_form textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#review_form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#review_form button:hover {
+    background-color: #ff4500;
 }

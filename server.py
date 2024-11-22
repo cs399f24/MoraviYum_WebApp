@@ -170,7 +170,6 @@ def menu(vendor):
     return jsonify(menu_list)
 
 
-
 @app.route('/submit_review', methods=['POST'])
 def submit_review():
     # Get data from the request
@@ -314,19 +313,24 @@ def authorize():
     return redirect('/new_user')
     
 def connectToMySQL():
-    '''
+    """
     Connects to MySQL and returns a cursor and connection object.
-    '''
-    MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
-    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
-    MYSQL_HOST = os.getenv('MYSQL_HOST')
-    MYSQL_DB = os.getenv('MYSQL_DATABASE')
+    """
+    DB_USER = os.getenv("DB_USER")
+    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    DB_HOST = os.getenv("DB_HOST")
+    DB_NAME = os.getenv("DB_NAME")
 
-    cnx = mysql.connector.connect(user=MYSQL_USERNAME, password=MYSQL_PASSWORD,
-                                  host=MYSQL_HOST,
-                                  database=MYSQL_DB)
+    cnx = mysql.connector.connect(
+        user=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        database=DB_NAME,
+        connect_timeout=10
+    )
+
     cursor = cnx.cursor()
     return cursor, cnx
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000, host="0.0.0.0")
+    app.run(debug=True, port=8000, host='0.0.0.0')
