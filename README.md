@@ -10,6 +10,9 @@ Project designed for *CSCI 399: Cloud Computing*
 - [Rafael Garcia Jr.](https://github.com/RGJ-713)
 - [Michael Romero](https://github.com/MichaelRomero1)
 
+## MoraviYum Architecture
+![architecture](https://github.com/cs399f24/MoraviYum_WebApp/blob/main/Architecture.png)
+
 ## How It Works
 
 Moravian students are greeted to a homepage where they can log in with their university email accounts.
