@@ -48,16 +48,16 @@ Afterwards, press the green **<> Code** button to gain a link to clone the repos
 Then, in your Command Line Interface, clone the repository with the following command:
 
 ```
-git clone https://github.com/cs220s24/trivia-discord-bot.git
+git clone https://github.com/cs399f24/MoraviYum_WebApp.git
 ```
 
 ### 3. Run `setup_bot_EC2.sh`
-Now, enter the **`trivia-discord-bot`** repository in the EC2 instance.
+Now, enter the **`moraviyum_WebApp`** repository in the EC2 instance.
 
 Run the following command:
 
 ```
-sh setup_bot_EC2.sh
+___
 ```
 
 Follow the instruction prompts given in the terminal. This will complete all the necessary set-up for the bot to run.
@@ -65,6 +65,3 @@ Follow the instruction prompts given in the terminal. This will complete all the
 ### 4. Run the bot
 The bot should now successfully be up and running on the EC2 instance!
 
-You can test this by posting the message **`ping`**. The bot should respond with **`"pong!"`**.
-
-To play a brief quiz with the bot, post the message **`start quiz`**.
