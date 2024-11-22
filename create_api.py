@@ -6,7 +6,7 @@ client = boto3.client('apigateway', region_name='us-east-1')
 # Check if the API already exists
 response = client.get_rest_apis()
 apis = response.get('items', [])
-        
+
 for api in apis:
     if api.get('name') == 'MoraviYum_API':
         print('API already exists')
@@ -15,7 +15,7 @@ for api in apis:
 # Create the API
 response = client.create_rest_api(
     name='MoraviYum_API',
-    description='API for food review app.',
+    description='API for MoraviYum Food Review App.',
     endpointConfiguration={
         'types': ['REGIONAL']
     }
@@ -58,9 +58,9 @@ fetch_vendor_foods_response = client.put_method_response(
     }
 )
 
-# Get the ARN for the "fetchVendorFoods" lambda function
+# Get the ARN for the "fetch_vendor_foods" lambda function
 lambda_client = boto3.client('lambda', region_name='us-east-1')
-lambda_arn = lambda_client.get_function(FunctionName='fetchVendorFoods')['Configuration']['FunctionArn']
+lambda_arn = lambda_client.get_function(FunctionName='fetch_vendor_foods')['Configuration']['FunctionArn']
 uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations'
 
 # Get the ARN for the IAM role
@@ -78,26 +78,26 @@ fetch_vendor_foods_integration = client.put_integration(
     uri=uri
 )
 
-# Create "fetch_all_vendors" resource
-fetch_all_vendors = client.create_resource(
+# Create "get_reviews" resource
+get_reviews = client.create_resource(
     restApiId=api_id,
     parentId=root_id,
-    pathPart='fetch_all_vendors'
+    pathPart='get_reviews'
 )
-fetch_all_vendors_resource_id = fetch_all_vendors["id"]
+get_reviews_resource_id = get_reviews["id"]
 
-# Define the GET method for "fetch_all_vendors"
-fetch_all_vendors_method = client.put_method(
+# Define the GET method for "get_reviews"
+get_reviews_method = client.put_method(
     restApiId=api_id,
-    resourceId=fetch_all_vendors_resource_id,
+    resourceId=get_reviews_resource_id,
     httpMethod='GET',
     authorizationType='NONE'
 )
 
-# Set the method response for "fetch_all_vendors"
-fetch_all_vendors_response = client.put_method_response(
+# Set the method response for "get_reviews"
+get_reviews_response = client.put_method_response(
     restApiId=api_id,
-    resourceId=fetch_all_vendors_resource_id,
+    resourceId=get_reviews_resource_id,
     httpMethod='GET',
     statusCode='200',
     responseParameters={
@@ -110,160 +110,19 @@ fetch_all_vendors_response = client.put_method_response(
     }
 )
 
-# Get the ARN for the "fetchAllVendors" lambda function
-lambda_arn = lambda_client.get_function(FunctionName='fetchAllVendors')['Configuration']['FunctionArn']
-uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations'
+# Get the ARN for the "get_reviews" lambda function
+get_reviews_lambda_arn = lambda_client.get_function(FunctionName='get_reviews')['Configuration']['FunctionArn']
+get_reviews_uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{get_reviews_lambda_arn}/invocations'
 
-# Set the integration for "fetch_all_vendors"
-fetch_all_vendors_integration = client.put_integration(
+# Set the integration for "get_reviews"
+get_reviews_integration = client.put_integration(
     restApiId=api_id,
-    resourceId=fetch_all_vendors_resource_id,
+    resourceId=get_reviews_resource_id,
     httpMethod='GET',
     credentials=lab_role,
     integrationHttpMethod='POST',
     type='AWS_PROXY',
-    uri=uri
-)
-
-# Create "add_food_item" resource
-add_food_item = client.create_resource(
-    restApiId=api_id,
-    parentId=root_id,
-    pathPart='add_food_item'
-)
-add_food_item_resource_id = add_food_item["id"]
-
-# Define the POST method for "add_food_item"
-add_food_item_method = client.put_method(
-    restApiId=api_id,
-    resourceId=add_food_item_resource_id,
-    httpMethod='POST',
-    authorizationType='NONE'
-)
-
-# Set the method response for "add_food_item"
-add_food_item_response = client.put_method_response(
-    restApiId=api_id,
-    resourceId=add_food_item_resource_id,
-    httpMethod='POST',
-    statusCode='200',
-    responseParameters={
-        'method.response.header.Access-Control-Allow-Headers': False,
-        'method.response.header.Access-Control-Allow-Origin': False,
-        'method.response.header.Access-Control-Allow-Methods': False
-    },
-    responseModels={
-        'application/json': 'Empty'
-    }
-)
-
-# Get the ARN for the "addFoodItem" lambda function
-lambda_arn = lambda_client.get_function(FunctionName='addFoodItem')['Configuration']['FunctionArn']
-uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations'
-
-# Set the integration for "add_food_item"
-add_food_item_integration = client.put_integration(
-    restApiId=api_id,
-    resourceId=add_food_item_resource_id,
-    httpMethod='POST',
-    credentials=lab_role,
-    integrationHttpMethod='POST',
-    type='AWS_PROXY',
-    uri=uri
-)
-
-# Create "update_food_item" resource
-update_food_item = client.create_resource(
-    restApiId=api_id,
-    parentId=root_id,
-    pathPart='update_food_item'
-)
-update_food_item_resource_id = update_food_item["id"]
-
-# Define the PUT method for "update_food_item"
-update_food_item_method = client.put_method(
-    restApiId=api_id,
-    resourceId=update_food_item_resource_id,
-    httpMethod='PUT',
-    authorizationType='NONE'
-)
-
-# Set the method response for "update_food_item"
-update_food_item_response = client.put_method_response(
-    restApiId=api_id,
-    resourceId=update_food_item_resource_id,
-    httpMethod='PUT',
-    statusCode='200',
-    responseParameters={
-        'method.response.header.Access-Control-Allow-Headers': False,
-        'method.response.header.Access-Control-Allow-Origin': False,
-        'method.response.header.Access-Control-Allow-Methods': False
-    },
-    responseModels={
-        'application/json': 'Empty'
-    }
-)
-
-# Get the ARN for the "updateFoodItem" lambda function
-lambda_arn = lambda_client.get_function(FunctionName='updateFoodItem')['Configuration']['FunctionArn']
-uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations'
-
-# Set the integration for "update_food_item"
-update_food_item_integration = client.put_integration(
-    restApiId=api_id,
-    resourceId=update_food_item_resource_id,
-    httpMethod='PUT',
-    credentials=lab_role,
-    integrationHttpMethod='POST',
-    type='AWS_PROXY',
-    uri=uri
-)
-
-# Create "delete_food_item" resource
-delete_food_item = client.create_resource(
-    restApiId=api_id,
-    parentId=root_id,
-    pathPart='delete_food_item'
-)
-delete_food_item_resource_id = delete_food_item["id"]
-
-# Define the DELETE method for "delete_food_item"
-delete_food_item_method = client.put_method(
-    restApiId=api_id,
-    resourceId=delete_food_item_resource_id,
-    httpMethod='DELETE',
-    authorizationType='NONE'
-)
-
-# Set the method response for "delete_food_item"
-delete_food_item_response = client.put_method_response(
-    restApiId=api_id,
-    resourceId=delete_food_item_resource_id,
-    httpMethod='DELETE',
-    statusCode='200',
-    responseParameters={
-        'method.response.header.Access-Control-Allow-Headers': False,
-        'method.response.header.Access-Control-Allow-Origin': False,
-        'method.response.header.Access-Control-Allow-Methods': False
-    },
-    responseModels={
-        'application/json': 'Empty'
-    }
-)
-
-# Get the ARN for the "deleteFoodItem" lambda function
-lambda_arn = lambda_client.get_function(FunctionName='deleteFoodItem')['Configuration']['FunctionArn']
-uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations'
-
-# Set the integration for "delete_food_item"
-delete_food_item_integration = client.put_integration(
-    restApiId=api_id,
-    resourceId=delete_food_item_resource_id,
-    httpMethod='DELETE',
-    credentials=lab_role,
-    integrationHttpMethod='POST',
-    type='AWS_PROXY',
-    uri=uri
+    uri=get_reviews_uri
 )
 
 print("DONE")

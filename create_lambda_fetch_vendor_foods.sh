@@ -4,7 +4,7 @@ if aws lambda get-function --function-name fetch_vendor_foods >/dev/null 2>&1; t
 fi    
 
 ROLE=$(aws iam get-role --role-name labRole --query "Role.Arn" --output text)
-zip fetch_vendor_foods.zip fetch_vendor_foods.py
+zip fetch_vendor_foods.zip lambda_fetch_vendor_foods.py
 aws lambda create-function --function-name fetch_vendor_foods \
   --runtime python3.9 \
   --role $ROLE \
