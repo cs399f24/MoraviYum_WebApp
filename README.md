@@ -36,7 +36,20 @@ pip install ___
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-```  
+```
+- Within the IDE, create a file in the project simply called .env and create a line that has FLASK_SECRET_KEY=""
+- Next, go into the terminal and run the following commands:
+```
+python3 
+import secrets
+print(secrets.token_hex())
+```
+- A string of text should appear, copy and paste this string in between the quotation marks of FLASK_SECRET_KEY within your .env file
+
+- Next, reopen your terminal and cd into the directory, run the command: python server.py
+
+- copy and paste the http://127.0.0.1:8000 into your favorite web browser 
+
 
 # AWS EC2 Instance Installation Tutorial
 
