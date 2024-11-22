@@ -46,7 +46,9 @@ print(secrets.token_hex())
 ```
 - A string of text should appear, copy and paste this string in between the quotation marks of FLASK_SECRET_KEY within your .env file
 
-- Next, reopen your terminal and cd into the directory, run the command: python server.py
+- Next, reopen your terminal and cd into the directory, run the command:
+  ```python server.py
+  ```
 
 - copy and paste the http://127.0.0.1:8000 into your favorite web browser 
 
