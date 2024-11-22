@@ -12,8 +12,8 @@ else
 fi
 
 # File paths for SQL dumps
-CREATE_SQL="./database/create.sql"
-INSERT_SQL="./database/insert.sql"
+CREATE_SQL="../database/create.sql"
+INSERT_SQL="../database/insert.sql"
 
 # Run create.sql
 echo "Executing $CREATE_SQL..."
