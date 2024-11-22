@@ -25,7 +25,7 @@ Once a vendor is selected, they can then select the food they want to leave a re
 
 ![reviewpage](MoraviYum_review.png)
 
-# AWS EC2 Instance Installation Tutorial (without Docker)
+# AWS EC2 Instance Installation Tutorial
 
 ### 1. Create a new EC2 instance
 If you haven't already, create a new EC2 instance on [Amazon Web Services](https://aws.amazon.com/?nc2=h_lg).
