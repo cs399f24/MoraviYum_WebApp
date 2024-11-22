@@ -51,7 +51,7 @@ Then, in your Command Line Interface, clone the repository with the following co
 git clone https://github.com/cs399f24/MoraviYum_WebApp.git
 ```
 
-### 3. Run `setup_bot_EC2.sh`
+### 3. Run `__`
 Now, enter the **`moraviyum_WebApp`** repository in the EC2 instance.
 
 Run the following command:
