@@ -25,6 +25,19 @@ Once a vendor is selected, they can then select the food they want to leave a re
 
 ![reviewpage](MoraviYum_review.png)
 
+### 2. Dependencies 
+There are multiple ways to install any dependencies that are not installed on your system.
+- You can use this command in your terminal with the blank replacing the dependency not in access: 
+```
+pip install ___
+```
+- You can create a virtual environment with these commands going into your terminal:
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```  
+
 # AWS EC2 Instance Installation Tutorial
 
 ### 1. Create a new EC2 instance
