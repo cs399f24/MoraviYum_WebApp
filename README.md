@@ -25,19 +25,56 @@ Once a vendor is selected, they can then select the food they want to leave a re
 
 ![reviewpage](MoraviYum_review.png)
 
-## What Was Used
-- HTML, CSS, and JavaScript were used for the UI
-- A MySQL database is used to store user accounts, food data, and review information
-- Images are stored in an S3 bucket
-- Google OAUTH is used for ensuring only Moravian students are allowed to sign-in
+# Local Deployment
+There are multiple ways to install any dependencies that are not installed on your system.
+- You can use this command in your terminal with the blank replacing the dependency not in access: 
+```
+pip install ___
+```
+- You can create a virtual environment with these commands going into your terminal:
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```  
 
-## Accomplishments
-- Laying the foundations and functionality of the vendor/food selection and review
-- Successful set-up of the database with working images that correspond to each food item
-- Successful implementation of a user login/logout feature through OAUTH
+# AWS EC2 Instance Installation Tutorial
 
-## Future Plans
-- A filtering feature to filter foods by rating, prices, calories, etc.
-- A "keyword" feature that lets users attribute certain descriptions to certain foods (ex: "PRO: Good price", "CON: Too many calories")
+### 1. Create a new EC2 instance
+If you haven't already, create a new EC2 instance on [Amazon Web Services](https://aws.amazon.com/?nc2=h_lg).
 
-hi
+Once created, `ssh` into the instance in a [Command Line Interface](https://en.wikipedia.org/wiki/Command-line_interface#:~:text=A%20command%2Dline%20interface%20\(CLI,interface%20available%20with%20punched%20cards.) with the following command:
+
+```
+ssh -i ~/.ssh/labsuser.pem ec2-user@<PUBLIC IPv4 ADDRESS HERE>
+```
+
+### 2. Clone the repo
+Once you are all set up, install `git` in the EC2 instance with the following command:
+
+```
+sudo yum install -y git
+```
+
+Afterwards, press the green **<> Code** button to gain a link to clone the repository.
+
+Then, in your Command Line Interface, clone the repository with the following command:
+
+```
+git clone https://github.com/cs399f24/MoraviYum_WebApp.git
+```
+
+### 3. Run `__`
+Now, enter the **`moraviyum_WebApp`** repository in the EC2 instance.
+
+Run the following command:
+
+```
+___
+```
+
+Follow the instruction prompts given in the terminal. This will complete all the necessary set-up for the bot to run.
+
+### 4. Run the bot
+The bot should now successfully be up and running on the EC2 instance!
+
