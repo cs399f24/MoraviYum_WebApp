@@ -47,7 +47,7 @@ s3_client.put_bucket_encryption(
 print("Bucket encryption enabled with Amazon S3 managed keys (SSE-S3).")
 
 # Upload files from the templates folder
-templates_folder = './templates'
+templates_folder = '../templates'
 for file_name in os.listdir(templates_folder):
     file_path = os.path.join(templates_folder, file_name)
     try:
@@ -57,7 +57,7 @@ for file_name in os.listdir(templates_folder):
         print(f"Failed to upload file '{file_name}': {e}")
 
 # Upload files from the static folder
-static_folder = './static'
+static_folder = '../static'
 for file_name in os.listdir(static_folder):
     file_path = os.path.join(static_folder, file_name)
     try:
@@ -67,7 +67,7 @@ for file_name in os.listdir(static_folder):
         print(f"Failed to upload file '{file_name}': {e}")
 
 # Upload images from the images folder
-images_folder = './images'
+images_folder = '../images'
 for file_name in os.listdir(images_folder):
     file_path = os.path.join(images_folder, file_name)
     try:
