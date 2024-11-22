@@ -4,7 +4,7 @@ if aws lambda get-function --function-name review >/dev/null 2>&1; then
 fi    
 
 ROLE=$(aws iam get-role --role-name labRole --query "Role.Arn" --output text)
-zip review.zip lambda_review.py
+zip review.zip lambda_reviews.py
 aws lambda create-function --function-name review \
   --runtime python3.9 \
   --role $ROLE \
