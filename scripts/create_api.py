@@ -92,5 +92,9 @@ create_resource_and_method('get_reviews', 'GET', 'get_reviews')
 # Create and integrate the "submit_review" resource
 create_resource_and_method('submit_review', 'POST', 'submit_review')
 
+# Create and integrate the "review" resource
+create_resource_and_method('review', 'GET', 'review')
+
 print("DONE")
+
 
