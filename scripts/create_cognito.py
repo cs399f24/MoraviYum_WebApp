@@ -1,4 +1,11 @@
 import boto3
+import dotenv
+import os
+
+dotenv.load_dotenv()
+CALLBACKURL = os.getenv('CALLBACKURL')
+LOGOUTURL = os.getenv('LOGOUTURL')
+API_GATEWAYURL = os.getenv('API_GATEWAYURL')
 
 # Initialize the Cognito client
 cognito_client = boto3.client('cognito-idp', region_name='us-east-1')
@@ -41,8 +48,8 @@ app_client_response = cognito_client.create_user_pool_client(
     AllowedOAuthFlows=['implicit'],  # Enable implicit grant
     AllowedOAuthScopes=['email', 'openid'],  # Scopes
     AllowedOAuthFlowsUserPoolClient=True,
-    CallbackURLs=['<<<AMPLIFYAPPGOESHERE>>>/review.html'],
-    LogoutURLs=['<<<AMPLIFYAPPGOESHERE>>>/logout'],
+    CallbackURLs=[f'{CALLBACKURL}/callback.html'],
+    LogoutURLs=[f'{LOGOUTURL}/review.html'],
     ExplicitAuthFlows=[
         'ALLOW_REFRESH_TOKEN_AUTH',
         'ALLOW_CUSTOM_AUTH',
@@ -66,15 +73,15 @@ print("Hosted UI domain configured")
 # Create a resource server
 resource_server_response = cognito_client.create_resource_server(
     UserPoolId=user_pool_id,
-    Identifier='<<<APIGATEWAYGOESHERE>>>/prod/<<<SOMETHINGGOESHERE>>>',
+    Identifier=f'{API_GATEWAYURL}/prod/review',
     Name='moraviyum_resource_server',
     Scopes=[
-        {'ScopeName': '<<<SOMETHING>>>', 'ScopeDescription': 'DESC HERE'}
+        {'ScopeName': 'review', 'ScopeDescription': 'Access to review page'}
     ]
 )
 
 print("Resource server created")
 
 # FIX THESE LATER
-hosted_ui_url = f"https://abc-2023-04-28.auth.us-east-1.amazoncognito.com/login?client_id={app_client_id}&response_type=token&scope=email+openid&redirect_uri=https://d123456acbdef.cloudfront.net/callback.html"
+hosted_ui_url = f"https://moraviyum-cloud-computing.auth.us-east-1.amazoncognito.com/login?client_id={app_client_id}&response_type=token&scope=email+openid&redirect_uri=https://staging.d1u8wmi9k660nd.amplifyapp.com/callback.html"
 print(f"Hosted UI URL: {hosted_ui_url}")
