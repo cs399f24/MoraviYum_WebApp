@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Post login redirect</title>
+    <style></style>
+</head>
+<body>
+    <section>
+        <p>Redirecting ...</p>
+    </section>
+    <script>
+        (function init(){
+            // Make sure the URL contains the hash with the token
+            if (!location.hash) {
+                alert("Looks like something went wrong");
+                return;
+            }
+
+            // Check if localStorage is available
+            if (!window.localStorage) {
+                alert("You do not have localstorage enabled, check your browser settings.");
+                return;
+            }
+
+            // Extract the id_token from the URL hash
+            var id_token_str = window.location.hash.split("&access_token=")[0];
+            var bearer_str = id_token_str.replace("#id_token=", "");
+
+            // Store the token in localStorage
+            window.localStorage.setItem("bearer_str", bearer_str);
+
+            // Redirect the user back to the review page (when logged in)
+            window.location = location.origin + "/review.html";
+        })();
+    </script>
+</body>
+</html>
