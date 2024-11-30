@@ -6,6 +6,9 @@ dotenv.load_dotenv()
 CALLBACKURL = os.getenv('CALLBACKURL')
 LOGOUTURL = os.getenv('LOGOUTURL')
 API_GATEWAYURL = os.getenv('API_GATEWAYURL')
+USER_EMAIL = os.getenv('USER_EMAIL')
+NEW_USERNAME = os.getenv('NEW_USERNAME')
+TEMP_PASS = os.getenv('TEMP_PASS')
 
 # Initialize the Cognito client
 cognito_client = boto3.client('cognito-idp', region_name='us-east-1')
@@ -82,6 +85,20 @@ resource_server_response = cognito_client.create_resource_server(
 
 print("Resource server created")
 
-# FIX THESE LATER
-hosted_ui_url = f"https://moraviyum-cloud-computing.auth.us-east-1.amazoncognito.com/login?client_id={app_client_id}&response_type=token&scope=email+openid&redirect_uri=https://staging.d1u8wmi9k660nd.amplifyapp.com/callback.html"
-print(f"Hosted UI URL: {hosted_ui_url}")
+# Add a new user to the User Pool
+new_user_email = USER_EMAIL  # Replace with the user's email
+new_user_username = NEW_USERNAME  # Replace with the user's username
+try:
+    new_user_response = cognito_client.admin_create_user(
+        UserPoolId=user_pool_id,
+        Username=new_user_username,
+        UserAttributes=[
+            {'Name': 'email', 'Value': new_user_email},
+            {'Name': 'email_verified', 'Value': 'true'}  # Set email as verified
+        ],
+        TemporaryPassword=TEMP_PASS,  # User must change this password on first login
+        MessageAction='SUPPRESS'  # Suppress sending an invitation email
+    )
+    print(f"Added new user with username: {new_user_username}")
+except Exception as e:
+    print(f"Error adding new user: {e}")
