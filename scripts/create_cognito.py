@@ -3,8 +3,7 @@ import dotenv
 import os
 
 dotenv.load_dotenv()
-CALLBACKURL = os.getenv('CALLBACKURL')
-LOGOUTURL = os.getenv('LOGOUTURL')
+AMPLIFY_DOMAIN = os.getenv('AMPLIFY_DOMAIN')
 API_GATEWAYURL = os.getenv('API_GATEWAYURL')
 USER_EMAIL = os.getenv('USER_EMAIL')
 NEW_USERNAME = os.getenv('NEW_USERNAME')
@@ -48,11 +47,11 @@ app_client_response = cognito_client.create_user_pool_client(
     UserPoolId=user_pool_id,
     ClientName='moraviyum_app_client',
     GenerateSecret=False,  # Public client
-    AllowedOAuthFlows=['implicit'],  # Enable implicit grant
-    AllowedOAuthScopes=['email', 'openid'],  # Scopes
+    AllowedOAuthFlows=['implicit'],
+    AllowedOAuthScopes=['email', 'openid'],
     AllowedOAuthFlowsUserPoolClient=True,
-    CallbackURLs=[f'{CALLBACKURL}/callback.html'],
-    LogoutURLs=[f'{LOGOUTURL}/review.html'],
+    CallbackURLs=[f'{AMPLIFY_DOMAIN}/callback.html'],
+    LogoutURLs=[f'{AMPLIFY_DOMAIN}/review.html'],
     ExplicitAuthFlows=[
         'ALLOW_REFRESH_TOKEN_AUTH',
         'ALLOW_CUSTOM_AUTH',
@@ -86,8 +85,8 @@ resource_server_response = cognito_client.create_resource_server(
 print("Resource server created")
 
 # Add a new user to the User Pool
-new_user_email = USER_EMAIL  # Replace with the user's email
-new_user_username = NEW_USERNAME  # Replace with the user's username
+new_user_email = USER_EMAIL
+new_user_username = NEW_USERNAME
 try:
     new_user_response = cognito_client.admin_create_user(
         UserPoolId=user_pool_id,
@@ -97,7 +96,7 @@ try:
             {'Name': 'email_verified', 'Value': 'true'}  # Set email as verified
         ],
         TemporaryPassword=TEMP_PASS,  # User must change this password on first login
-        MessageAction='SUPPRESS'  # Suppress sending an invitation email
+        MessageAction='SUPPRESS'  # Don't send invitation email
     )
     print(f"Added new user with username: {new_user_username}")
 except Exception as e:
