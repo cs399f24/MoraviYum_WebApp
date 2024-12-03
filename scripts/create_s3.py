@@ -71,7 +71,7 @@ images_folder = '../images'
 for file_name in os.listdir(images_folder):
     file_path = os.path.join(images_folder, file_name)
     try:
-        s3_client.upload_file(file_path, s3_bucket_name, {file_name})
+        s3_client.upload_file(file_path, s3_bucket_name, file_name)
         print(f"Uploaded image '{file_name}' to bucket '{s3_bucket_name}/'.")
     except Exception as e:
         print(f"Failed to upload image '{file_name}': {e}")
