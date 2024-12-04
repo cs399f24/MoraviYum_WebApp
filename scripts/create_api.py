@@ -1,10 +1,12 @@
 import boto3
 import sys
+import time
 
-# Initialize API Gateway and Lambda clients
+# Initialize API Gateway, Lambda, Cognito, and IAM clients
 client = boto3.client('apigateway', region_name='us-east-1')
 lambda_client = boto3.client('lambda', region_name='us-east-1')
 iam_client = boto3.client('iam')
+cognito_client = boto3.client('cognito-idp', region_name='us-east-1')
 
 # Check if the API already exists
 response = client.get_rest_apis()
@@ -89,12 +91,20 @@ create_resource_and_method('fetch_vendor_foods', 'GET', 'fetch_vendor_foods')
 # Create and integrate the "get_reviews" resource
 create_resource_and_method('get_reviews', 'GET', 'get_reviews')
 
+# Create and integrate the "get_user_handle" resource
+create_resource_and_method('get_user_handle', 'GET', 'get_user_handle')
+
+# Create and integrate the "menu" resource
+create_resource_and_method('menu', 'GET', 'menu')
+
 # Create and integrate the "submit_review" resource
 create_resource_and_method('submit_review', 'POST', 'submit_review')
 
 # Create and integrate the "review" resource
 create_resource_and_method('review', 'GET', 'review')
 
+# Create and integrate the "store_user_handle" resource
+create_resource_and_method('store_user_handle', 'POST', 'store_user_handle')
+
 print("DONE")
-
-
+print(f"API Gateway ID: {api_id}")
