@@ -66,7 +66,11 @@ print(f"Created App Client with ID: {app_client_id}")
 
 # Configure a domain for the hosted UI
 cognito_client.create_user_pool_domain(
+<<<<<<< HEAD
     Domain='moraviyum-cloud-computing3',
+=======
+    Domain='moraviyum-cloud-computing-2',
+>>>>>>> f86d002c448d3187b82a32f8c612d51998af9a39
     UserPoolId=user_pool_id
 )
 print("Hosted UI domain configured")
