@@ -1,7 +1,7 @@
-python lamdba_fetch_vendor_foods.py
+python lambda_fetch_vendor_foods.py
 python lambda_get_reviews.py
 python lambda_submit_review.py
-python lambda_reviews.py
+python lambda_review.py
 python lambda_get_user_handle.py
 python lambda_store_user_handle.py
 ./create_lambda_fetch_vendor_foods.sh
