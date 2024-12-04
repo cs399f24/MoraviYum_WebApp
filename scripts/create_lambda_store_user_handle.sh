@@ -5,7 +5,7 @@ fi
 
 ROLE=$(aws iam get-role --role-name labRole --query "Role.Arn" --output text)
 zip store_user_handle.zip lambda_store_user_handle.py
-aws lambda create-function --function-name review \
+aws lambda create-function --function-name store_user_handle \
   --runtime python3.9 \
   --role $ROLE \
   --zip-file fileb://store_user_handle.zip \
