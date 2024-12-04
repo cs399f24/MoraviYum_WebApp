@@ -4,7 +4,7 @@ if aws lambda get-function --function-name get_user_handle >/dev/null 2>&1; then
 fi    
 
 ROLE=$(aws iam get-role --role-name labRole --query "Role.Arn" --output text)
-zip get_user_handle.zip lambda_get_user_handle.py
+zip get_user_handle.zip get_user_handle.py
 aws lambda create-function --function-name get_user_handle \
   --runtime python3.9 \
   --role $ROLE \

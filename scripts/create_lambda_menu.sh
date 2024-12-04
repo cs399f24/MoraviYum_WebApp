@@ -4,7 +4,7 @@ if aws lambda get-function --function-name menu >/dev/null 2>&1; then
 fi    
 
 ROLE=$(aws iam get-role --role-name labRole --query "Role.Arn" --output text)
-zip menu.zip lambda_menu.py
+zip menu.zip menu.py
 aws lambda create-function --function-name menu \
   --runtime python3.9 \
   --role $ROLE \
