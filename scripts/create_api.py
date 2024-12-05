@@ -85,6 +85,17 @@ def create_resource_and_method(resource_path, http_method, lambda_function_name)
         uri=uri
     )
 
+def deploy_api(stage_name):
+    """
+    Deploy the API Gateway to the specified stage.
+    """
+    client.create_deployment(
+        restApiId=api_id,
+        stageName=stage_name,
+        description=f"Deployment for {stage_name} stage."
+    )
+    print(f"API deployed to stage: {stage_name}")
+
 # Create and integrate the "fetch_vendor_foods" resource
 create_resource_and_method('fetch_vendor_foods', 'GET', 'fetch_vendor_foods')
 
@@ -105,6 +116,9 @@ create_resource_and_method('review', 'GET', 'review')
 
 # Create and integrate the "store_user_handle" resource
 create_resource_and_method('store_user_handle', 'POST', 'store_user_handle')
+
+# Deploy the API
+deploy_api("prod")
 
 print("DONE")
 print(f"API Gateway ID: {api_id}")
