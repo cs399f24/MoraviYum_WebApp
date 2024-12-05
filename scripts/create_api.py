@@ -102,9 +102,6 @@ create_resource_and_method('fetch_vendor_foods', 'GET', 'fetch_vendor_foods')
 # Create and integrate the "get_reviews" resource
 create_resource_and_method('get_reviews', 'GET', 'get_reviews')
 
-# Create and integrate the "get_user_handle" resource
-create_resource_and_method('get_user_handle', 'GET', 'get_user_handle')
-
 # Create and integrate the "menu" resource
 create_resource_and_method('menu', 'GET', 'menu')
 
@@ -114,8 +111,6 @@ create_resource_and_method('submit_review', 'POST', 'submit_review')
 # Create and integrate the "review" resource
 create_resource_and_method('review', 'GET', 'review')
 
-# Create and integrate the "store_user_handle" resource
-create_resource_and_method('store_user_handle', 'POST', 'store_user_handle')
 
 # Deploy the API
 deploy_api("prod")
