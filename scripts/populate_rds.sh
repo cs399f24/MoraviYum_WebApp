@@ -25,7 +25,7 @@ fi
 
 # Run insert.sql
 echo "Executing $INSERT_SQL..."
-mysql -h "$DB_HOST" -u "$RDS_USERNAME" -p"$RDS_PASSWORD" "$MYSQL_DATABASE" < "$INSERT_SQL"
+mysql -h "$DB_HOST" -u "$RDS_USERNAME" -p"$RDS_PASSWORD" "$RDS_DB_NAME" < "$INSERT_SQL"
 if [ $? -ne 0 ]; then
   echo "Error: Failed to execute $INSERT_SQL"
   exit 1
