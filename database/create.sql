@@ -1,7 +1,7 @@
 -- Create database
-DROP DATABASE IF EXISTS MoraviYum;
-CREATE DATABASE IF NOT EXISTS MoraviYum;
-USE MoraviYum;
+DROP DATABASE IF EXISTS moraviyum_database;
+CREATE DATABASE IF NOT EXISTS moraviyum_database;
+USE moraviyum_database;
 
 -- Create tables
 -- CREATE TABLE IF NOT EXISTS session ( 
