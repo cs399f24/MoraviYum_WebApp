@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS images (
 );
 
 CREATE TABLE IF NOT EXISTS reviews (
-    review_id INT(5),
+    review_id INT(5) AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(50),
     food_id VARCHAR(50),
     rating INT(1),

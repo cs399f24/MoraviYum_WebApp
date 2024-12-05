@@ -118,17 +118,14 @@ def deploy_api(stage_name):
 # Create and integrate the "fetch_vendor_foods" resource
 create_resource_and_method('fetch_vendor_foods', 'GET', 'fetch_vendor_foods')
 
-# Create and integrate the "get_reviews" resource
-create_resource_and_method('get_reviews', 'GET', 'get_reviews')
-
 # Create and integrate the "menu/{vendor}" resource with dynamic vendor path
 create_resource_and_method('menu/{vendor}', 'GET', 'menu')
 
+# Create and integrate the "get_reviews" resource
+create_resource_and_method('get_reviews', 'GET', 'get_reviews')
+
 # Create and integrate the "submit_review" resource
 create_resource_and_method('submit_review', 'POST', 'submit_review')
-
-# Create and integrate the "review" resource
-create_resource_and_method('review', 'GET', 'review')
 
 # Deploy the API to a stage (e.g., 'prod' stage)
 deploy_api('prod')
