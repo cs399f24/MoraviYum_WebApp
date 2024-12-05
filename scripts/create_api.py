@@ -38,26 +38,45 @@ def create_resource_and_method(resource_path, http_method, lambda_function_name)
     """
     Helper function to create a resource, define its method, and set Lambda integration.
     """
-    # Create resource
-    resource = client.create_resource(
-        restApiId=api_id,
-        parentId=root_id,
-        pathPart=resource_path
-    )
-    resource_id = resource["id"]
+    # Split the resource_path into parts (e.g., 'menu/{vendor}' -> ['menu', '{vendor}'])
+    path_parts = resource_path.split('/')
+    
+    # Initialize parentId as root_id
+    parent_id = root_id
 
-    # Define method
-    method = client.put_method(
+    # Create resources for each path part
+    for path_part in path_parts:
+        # Check if the resource already exists under the current parent
+        resources = client.get_resources(restApiId=api_id)['items']
+        existing_resource = next(
+            (res for res in resources if 'pathPart' in res and res['pathPart'] == path_part and res['parentId'] == parent_id),
+            None
+        )
+
+        if existing_resource:
+            # If the resource already exists, get its ID
+            parent_id = existing_resource['id']
+        else:
+            # Create the resource
+            resource = client.create_resource(
+                restApiId=api_id,
+                parentId=parent_id,
+                pathPart=path_part
+            )
+            parent_id = resource["id"]
+
+    # Define method for the resource (GET, POST, etc.)
+    client.put_method(
         restApiId=api_id,
-        resourceId=resource_id,
+        resourceId=parent_id,
         httpMethod=http_method,
-        authorizationType='NONE'
+        authorizationType='NONE'  # Modify if you use authorization
     )
 
-    # Set the method response
-    method_response = client.put_method_response(
+    # Set the method response for CORS headers (if needed)
+    client.put_method_response(
         restApiId=api_id,
-        resourceId=resource_id,
+        resourceId=parent_id,
         httpMethod=http_method,
         statusCode='200',
         responseParameters={
@@ -74,12 +93,12 @@ def create_resource_and_method(resource_path, http_method, lambda_function_name)
     lambda_arn = lambda_client.get_function(FunctionName=lambda_function_name)['Configuration']['FunctionArn']
     uri = f'arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/{lambda_arn}/invocations'
 
-    # Set Lambda integration
-    integration = client.put_integration(
+    # Set the Lambda integration for the method
+    client.put_integration(
         restApiId=api_id,
-        resourceId=resource_id,
+        resourceId=parent_id,
         httpMethod=http_method,
-        credentials=lab_role,
+        credentials=lab_role,  # The IAM role that API Gateway assumes to invoke Lambda
         integrationHttpMethod='POST',
         type='AWS_PROXY',
         uri=uri
@@ -102,8 +121,8 @@ create_resource_and_method('fetch_vendor_foods', 'GET', 'fetch_vendor_foods')
 # Create and integrate the "get_reviews" resource
 create_resource_and_method('get_reviews', 'GET', 'get_reviews')
 
-# Create and integrate the "menu" resource
-create_resource_and_method('menu', 'GET', 'menu')
+# Create and integrate the "menu/{vendor}" resource with dynamic vendor path
+create_resource_and_method('menu/{vendor}', 'GET', 'menu')
 
 # Create and integrate the "submit_review" resource
 create_resource_and_method('submit_review', 'POST', 'submit_review')
@@ -111,9 +130,8 @@ create_resource_and_method('submit_review', 'POST', 'submit_review')
 # Create and integrate the "review" resource
 create_resource_and_method('review', 'GET', 'review')
 
-
-# Deploy the API
-deploy_api("prod")
+# Deploy the API to a stage (e.g., 'prod' stage)
+deploy_api('prod')
 
 print("DONE")
 print(f"API Gateway ID: {api_id}")
