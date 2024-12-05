@@ -52,20 +52,31 @@
     <script>
         function fetchMenu(vendor) {
             fetch(`/menu/${vendor}`)
-                .then(response => response.json())
-                .then(data => {
-                    let menuHTML = '<h3>Menu for ' + vendor + '</h3>';
-                    data.forEach(item => {
-                        menuHTML += `<p>${item.food_name}: ${item.price} - ${item.calories} calories</p>`;
-                        if (item.image_url) {
-                            menuHTML += `<img src="${item.image_url}" alt="${item.food_name}" style="width:100px;height:auto;"><br>`;
-                        }
-                    });
-                    document.getElementById('menu_container').innerHTML = menuHTML;
-                })
-                .catch(error => console.error('Error fetching menu:', error));
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data || data.length === 0) {
+                    document.getElementById('menu_container').innerHTML = `<p>No menu available for ${vendor}.</p>`;
+                    return;
+                }
+
+                let menuHTML = `<h3>Menu for ${vendor}</h3>`;
+                data.forEach(item => {
+                    menuHTML += `<p>${item.food_name}: ${item.price} - ${item.calories} calories</p>`;
+                    if (item.image_url) {
+                        menuHTML += `<img src="${item.image_url}" alt="${item.food_name}" style="width:100px;height:auto;"><br>`;
+                    }
+                });
+                document.getElementById('menu_container').innerHTML = menuHTML;
+            })
+            .catch(error => console.error('Error fetching menu:', error));
         }
-        </script>
+
+    </script>
 
     <style>
         .scrollable-container {
