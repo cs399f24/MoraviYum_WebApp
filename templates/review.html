@@ -53,7 +53,6 @@
         const server = 'https://pqix804st3.execute-api.us-east-1.amazonaws.com/prod';
 
         function fetchMenu(vendor) {
-<<<<<<< HEAD
             fetch(`/menu/${vendor}`)
                 .then(response => {
                     if (!response.ok) {
@@ -77,23 +76,7 @@
                 document.getElementById('menu_container').innerHTML = menuHTML;
             })
             .catch(error => console.error('Error fetching menu:', error));
-=======
-            fetch(server + `/menu/${vendor}`)
-                .then(response => response.json())
-                .then(data => {
-                    let menuHTML = '<h3>Menu for ' + vendor + '</h3>';
-                    data.forEach(item => {
-                        menuHTML += `<p>${item.food_name}: ${item.price} - ${item.calories} calories</p>`;
-                        if (item.image_url) {
-                            menuHTML += `<img src="${item.image_url}" alt="${item.food_name}" style="width:100px;height:auto;"><br>`;
-                        }
-                    });
-                    document.getElementById('menu_container').innerHTML = menuHTML;
-                })
-                .catch(error => console.error('Error fetching menu:', error));
->>>>>>> b8bc8ae5811c2f25113fe639e41da797b86f4977
         }
-
     </script>
 
     <style>
