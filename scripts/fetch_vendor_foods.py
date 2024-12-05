@@ -1,33 +1,26 @@
 import json
-import boto3
 import mysql.connector
+import boto3
 
+# Initialize Secrets Manager and RDS Data API client
 def get_secret(secret_name):
-    # Create a Secrets Manager client
-    client = boto3.client('secretsmanager')
-    
+    client = boto3.client('secretsmanager', region_name='us-east-1')
     try:
-        # Retrieve the secret value
         response = client.get_secret_value(SecretId=secret_name)
-        # Secrets Manager stores the value as a JSON string, parse it
         return json.loads(response['SecretString'])
     except Exception as e:
         print(f"Error retrieving secret {secret_name}: {e}")
         raise
 
 def lambda_handler(event, context):
-    """
-    Lambda function to fetch vendor foods based on query parameters.
-    """
+    # Retrieve database credentials from Secrets Manager
     secrets = get_secret("prod/moraviyum/rds-new")
-    
-    # Retrieve DB credentials from Secrets Manager
     DB_HOST = secrets.get("host")
     DB_NAME = secrets.get("dbname")
     DB_USERNAME = secrets.get("username")
     DB_PASSWORD = secrets.get("password")
-    
-    # Initialize response template
+
+    # Initialize the response template
     response = {
         'statusCode': 500,
         'headers': {
@@ -39,8 +32,8 @@ def lambda_handler(event, context):
     }
 
     try:
-        # Get query parameters
-        vendor_name = event['queryStringParameters'].get('vendor', None)
+        # Parse query parameters
+        vendor_name = event.get("queryStringParameters", {}).get("vendor")
         if not vendor_name:
             response['statusCode'] = 400
             response['body'] = json.dumps({"error": "Vendor name is required"})
@@ -54,55 +47,36 @@ def lambda_handler(event, context):
             database=DB_NAME
         )
         
+        # Perform the query
         cursor = connection.cursor(dictionary=True)
-        
-        # SQL query to fetch vendor foods
-        sql_query = """
-            SELECT 
-                f.food_name, 
-                f.food_id, 
-                f.price, 
-                f.calories, 
-                f.avg_rating, 
-                i.image_url
-            FROM 
-                foods f
-            LEFT JOIN 
-                images i ON f.food_id = i.food_id
-            WHERE 
-                f.vendor = %s;
+        query = """
+        SELECT 
+            f.food_name, 
+            f.food_id, 
+            f.price, 
+            f.calories, 
+            f.avg_rating, 
+            i.image_url
+        FROM 
+            foods f
+        LEFT JOIN 
+            images i ON f.food_id = i.food_id
+        WHERE 
+            f.vendor = %s;
         """
-        
-        cursor.execute(sql_query, (vendor_name,))
+        cursor.execute(query, (vendor_name,))
         rows = cursor.fetchall()
         
+        # Format the response
+        response['statusCode'] = 200
+        response['body'] = json.dumps(rows, default=str)
+
         # Close the connection
         cursor.close()
         connection.close()
-        
-        # Parse records into food list
-        foods = [
-            {
-                "food_name": row['food_name'],
-                "food_id": row['food_id'],
-                "price": row['price'],
-                "calories": row['calories'],
-                "avg_rating": row['avg_rating'],
-                "image_url": row['image_url'] if row['image_url'] else None
-            }
-            for row in rows
-        ]
-        
-        # Update response
-        response['statusCode'] = 200
-        response['body'] = json.dumps(foods)
 
-    except mysql.connector.Error as e:
-        print(f"MySQL error: {e}")
-        response['body'] = json.dumps({"error": f"MySQL error: {str(e)}"})
-    
     except Exception as e:
-        print(f"Unexpected error: {e}")
-        response['body'] = json.dumps({"error": f"Unexpected error: {str(e)}"})
+        print(f"Error: {e}")
+        response['body'] = json.dumps({"error": str(e)})
     
     return response
