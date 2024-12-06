@@ -53,7 +53,7 @@
         const server = 'https://pqix804st3.execute-api.us-east-1.amazonaws.com/prod';
 
         function fetchMenu(vendor) {
-            fetch(`/menu/${vendor}`)
+            fetch(server + `/menu/${vendor}`)
                 .then(response => {
                     if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
