@@ -126,8 +126,6 @@
     <!-- Review form container (initially hidden) -->
     <div id="review_form_container" class="review-form-container" style="display: none;">
         <form id="review_form">
-            <label for="user_id">User ID:</label>
-            <input type="text" id="user_id" required><br>
             
             <label for="food">Food ID:</label>
             <input type="text" id="food" required><br>
@@ -273,7 +271,7 @@
             event.preventDefault(); // Prevent the default form submission
 
             // Gather form data
-            const user_id = document.getElementById('user_id').value;
+            const user_id = localStorage.getItem('username');;
             const food = document.getElementById('food').value;
             const rating = parseInt(document.getElementById('rating').value);
             const review_text = document.getElementById('review_text').value;

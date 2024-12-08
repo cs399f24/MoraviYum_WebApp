@@ -28,8 +28,21 @@
             var id_token_str = window.location.hash.split("&access_token=")[0];
             var bearer_str = id_token_str.replace("#id_token=", "");
 
+            function parseJwt(token) {
+                try {
+                    return JSON.parse(atob(token.split('.')[1]));
+                } catch (e) {
+                    console.error("Invalid token:", e);
+                    return null;
+                }
+            }
+
+            var tokenPayload = parseJwt(bearer_str);
+            var username = tokenPayload["cognito:username"];
+
             // Store the token in localStorage
             window.localStorage.setItem("bearer_str", bearer_str);
+            window.localStorage.setItem("username", username);
 
             // Redirect the user back to the review page (when logged in)
             window.location = location.origin + "/review.html";
