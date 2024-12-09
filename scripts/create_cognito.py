@@ -57,7 +57,8 @@ app_client_response = cognito_client.create_user_pool_client(
         'ALLOW_CUSTOM_AUTH',
         'ALLOW_USER_SRP_AUTH',
         'ALLOW_USER_PASSWORD_AUTH'
-    ]
+    ],
+    SupportedIdentityProviders=["COGNITO"]  # Add Cognito User Pool as the identity provider
 )
 
 app_client_id = app_client_response['UserPoolClient']['ClientId']
