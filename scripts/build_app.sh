@@ -10,10 +10,13 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Check for .env file
+# Check for .env file in .venv
 if [ ! -f "../.venv/.env" ]; then
-  echo -e "${RED}Error: .env file not found. Please create a .env file with the required environment variables.${NC}"
-  exit 1
+  # If not found in .venv, check in the main directory
+  if [ ! -f "../.env" ]; then
+    echo -e "${RED}Error: .env file not found in both .venv and main directory. Please create a .env file with the required environment variables.${NC}"
+    exit 1
+  fi
 fi
 
 # Check for Python
