@@ -148,10 +148,10 @@ Copy and paste the following bucket policy into the **`Policy`** text field to a
 
 Press the orange **`Save changes`** button at the bottom of the page to save the new bucket policy.
 
-### Step 4. Intially deploy the app
-You will now deploy the app for the first time.
+### Step 4. Preparing initial deployment
+You will now prepare to deploy the app for the first time.
 
-Before doing so, run the following command while in the **`scripts`** directory to ensure certain `create` scripts will be properly executed:
+First, run the following command while in the **`scripts`** directory to ensure certain `create` scripts will be properly executed:
 
 ```
 chmod +x ./create_*
@@ -178,7 +178,7 @@ NEW_USERNAME='<FILL-IN-HERE>'
 TEMP_PASS='<FILL-IN-HERE>'
 ```
 
-Finally, locate the **`scripts/create_cognito.py`** file and locate lines 75-81, replacing `<UNIQUE-COGNITO-DOMAIN-HERE>` with a universally unique domain name (i.e: `moraviyum-domain-name`) and be sure to save the file:
+Finally, locate the **`scripts/create_cognito.py`** file and locate **`lines 75-81`**, replacing `<UNIQUE-COGNITO-DOMAIN-HERE>` with a universally unique domain name (i.e: `moraviyum-domain-name`) and be sure to save the file:
 
 ```
 # Configure a domain for the hosted UI
@@ -190,15 +190,52 @@ cognito_client.create_user_pool_domain(
 print("Hosted UI domain configured")
 ```
 
-Now, run the following command:
+### Step 5. Initially deploy the app
+Now, run the following command to initially deploy the app:
 
 ```
 sh initial_deploy.sh
 ```
 
-*Note: Be patient, as the initial deployment may take a while.*
+*Note: Be patient, as this may take a while.*
 
+### Step 6. Additional configuration for now-deployed app
+The app should now be successfully deployed! Now, a few more small changes need to be made in order for the web app to fully connect to each resource.
 
+First, go to [AWS Amplify](https://us-east-1.console.aws.amazon.com/amplify/apps) and select the newly created **`MoraviYumApp`**.
+
+Press the purple **`Deploy updates`** button, and select **`Amazon S3`** under the **`Methods`** section. Select the purple **`Browse S3`**, and choose your previously created S3 bucket. Finally, hit the purple **`Save and deploy`** button.
+
+Now, access the deployed app and press the blue **`Login`** button.
+
+Locate the **`templates/index.html`** file in Cloud9 and copy the full link address of the Cognito sign-in page you were taken to on the web app. Modify **`lines 17 and 24`** of the **`index.html`** file and replace `<UNIQUE-COGNITO-DOMAIN-HERE>` with the link you just copied. Be sure to save the file, afterwards:
+
+```
+<a href="<UNIQUE-COGNITO-DOMAIN-NAME>">
+const login_server = '<UNIQUE-COGNITO-DOMAIN-NAME>'
+```
+
+You will do something similar for the **`templates/review.html`** file. Locate **`line 53`**, and replace `<API-GATEWAY-INVOKE-URL>` with the Invoke URL obtained from [API Gateway](https://us-east-1.console.aws.amazon.com/apigateway/main/apis?api=unselected&region=us-east-1):
+
+```
+const server = '<API-GATEWAY-INVOKE-URL>';
+```
+
+Once modified, run the following commands in the Cloud9 terminal to copy the newly editted files to your S3 bucket (this is assuming you are still in the **`scripts`** directory:
+
+```
+aws s3 cp ../templates/index.html s3://<BUCKET-NAME>/
+aws s3 cp ../templates/review.html s3://<BUCKET-NAME>/
+```
+
+Back on API Gateway, locate and click the **`submit_review`** resource under the **`Resources`** section. Press the blue **`Enable CORS`** button at the top of the screen.
+
+Check each box on the initial setting and modify the **`Access-Control-Allow-Headers`** field to only read `Content-Type`. Press the orange **`Save`** button to save your changes. Be sure to press the orange **`Deploy API`** button on the screen afterwards.
+
+Once all has been done, deploy the changes on Amplify by following the first few tasks described during this step.
+
+### Step 7. Enjoy!
+At this point, the app should be fully and successfully deployed!
 
 # Additional Info
 
