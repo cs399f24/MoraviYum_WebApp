@@ -11,7 +11,7 @@ Project designed for *CSCI 399: Cloud Computing*
 - [Michael Romero](https://github.com/MichaelRomero1)
 
 ## MoraviYum Architecture
-![architecture](architecture.png)
+![architecture](architecture.PNG)
 
 ## How It Works
 
