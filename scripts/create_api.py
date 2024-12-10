@@ -115,9 +115,6 @@ def deploy_api(stage_name):
     )
     print(f"API deployed to stage: {stage_name}")
 
-# Create and integrate the "fetch_vendor_foods" resource
-create_resource_and_method('fetch_vendor_foods', 'GET', 'fetch_vendor_foods')
-
 # Create and integrate the "menu/{vendor}" resource with dynamic vendor path
 create_resource_and_method('menu/{vendor}', 'GET', 'menu')
 
