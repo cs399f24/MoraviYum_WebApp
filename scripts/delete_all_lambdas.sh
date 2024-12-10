@@ -12,7 +12,6 @@ fi
 
 # Array of delete scripts to execute
 delete_scripts=(
-  "./delete_lambda_fetch_vendor_foods.sh"
   "./delete_lambda_menu.sh"
   "./delete_lambda_get_reviews.sh"
   "./delete_lambda_submit_review.sh"
