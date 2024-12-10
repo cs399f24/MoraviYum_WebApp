@@ -50,8 +50,8 @@ app_client_response = cognito_client.create_user_pool_client(
     AllowedOAuthFlows=['implicit'],
     AllowedOAuthScopes=['email', 'openid'],
     AllowedOAuthFlowsUserPoolClient=True,
-    CallbackURLs=[f'{AMPLIFY_DOMAIN}/callback.html'],
-    LogoutURLs=[f'{AMPLIFY_DOMAIN}/review.html'],
+    CallbackURLs=[f'{AMPLIFY_DOMAIN}callback.html'],
+    LogoutURLs=[f'{AMPLIFY_DOMAIN}review.html'],
     ExplicitAuthFlows=[
         'ALLOW_REFRESH_TOKEN_AUTH',
         'ALLOW_CUSTOM_AUTH',
@@ -66,6 +66,7 @@ print(f"Created App Client with ID: {app_client_id}")
 
 # Configure a domain for the hosted UI
 cognito_client.create_user_pool_domain(
+
     Domain='moraviyum-cloud-computing3',
     UserPoolId=user_pool_id
 )
