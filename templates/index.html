@@ -14,14 +14,14 @@
         <p id="moraviyum_description">MoraviYum is a platform for Moravian students to share their honest opinions about the food options available on campus. </p>
         <h5 id="moraviyum_description">Sign up to start sharing your own thoughts with your fellow students!</h5>
         <!-- The following link will change depending on the cognito user pool. Check to see if we can make it a .env variable later -->
-        <a href="https://moraviyum-cloud-computing3.auth.us-east-1.amazoncognito.com/login?client_id=2bls2bt3hkr2scdij3g4oridss&response_type=token&scope=email+openid&redirect_uri=https%3A%2F%2Fprod.d37j08j3lxdumm.amplifyapp.com%2Fcallback.html">
+        <a href="<UNIQUE-COGNITO-DOMAIN-NAME>">
             <button id="login_button" onclick="handleAuth()">Log in with Cognito</button>
         </a>
     </div>
     
     <script>
         // The following link will change dependong on the cognito user pool. Check to see if we can make it a .env variable later
-        const login_server = 'https://moraviyum-cloud-computing3.auth.us-east-1.amazoncognito.com/login?client_id=2bls2bt3hkr2scdij3g4oridss&response_type=token&scope=email+openid&redirect_uri=https%3A%2F%2Fprod.d37j08j3lxdumm.amplifyapp.com%2Fcallback.html'
+        const login_server = '<UNIQUE-COGNITO-DOMAIN-NAME>'
         // Check if the user is logged in by looking for a token in localStorage
         function updateAuthButton() {
             const authButton = document.getElementById('login_button');
