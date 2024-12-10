@@ -13,6 +13,17 @@ def get_secret(secret_name):
         raise
 
 def lambda_handler(event, context):
+    # Handle preflight OPTIONS request
+    if event['httpMethod'] == 'OPTIONS':
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Headers': "Content-Type",
+                'Access-Control-Allow-Methods': "OPTIONS,POST,GET",
+                'Access-Control-Allow-Origin': "*"
+            }
+        }
+    
     # Retrieve database credentials from Secrets Manager
     secrets = get_secret("prod/moraviyum/rds-new")
     DB_HOST = secrets.get("host")
@@ -24,8 +35,8 @@ def lambda_handler(event, context):
     response = {
         'statusCode': 500,
         'headers': {
-            'Access-Control-Allow-Headers': "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-            'Access-Control-Allow-Methods': "POST",
+            'Access-Control-Allow-Headers': "Content-Type",
+            'Access-Control-Allow-Methods': "OPTIONS,POST,GET",
             'Access-Control-Allow-Origin': "*"
         },
         'body': json.dumps({"error": "Internal server error"})
@@ -70,6 +81,11 @@ def lambda_handler(event, context):
         # Return success response
         response['statusCode'] = 200
         response['body'] = json.dumps({"message": "Review submitted successfully!"})
+        response['headers'] = {
+            'Access-Control-Allow-Headers': "Content-Type",
+            'Access-Control-Allow-Methods': "OPTIONS,POST,GET",
+            'Access-Control-Allow-Origin': "*"
+        }
 
     except Exception as e:
         print(f"Error: {e}")
