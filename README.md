@@ -2,7 +2,7 @@
 
 An online web application designed for Moravian University students to help each other out by sharing their thoughts and opinions on the various foods provided on campus!
 
-Project designed for *CSCI 399: Cloud Computing*
+Project designed for *CSCI 399: Cloud Computing.*
 
 ## Contributers
 - [Christine Colvin](https://github.com/christinecolvin)
@@ -25,75 +25,19 @@ Once a vendor is selected, they can then select the food they want to leave a re
 
 ![reviewpage](MoraviYum_review.png)
 
-# Local Deployment
-There are multiple ways to install any dependencies that are not installed on your system.
-- You can use this command in your terminal with the blank replacing the dependency not in access: 
+# Additional Info
+
+### `.env` file
+Certain scripts add to a `.env` file that hold your credentials. Should you feel the need to edit this manually, the `.env` must contain the following:
 ```
-pip install ___
+RDS_USERNAME='<FILL-IN-HERE>'
+RDS_PASSWORD='<FILL-IN-HERE>'
+RDS_DB_NAME='<FILL-IN-HERE>'
+S3_BUCKET_NAME='<FILL-IN-HERE>'
+AMPLIFY_DOMAIN='<FILL-IN-HERE>'
+API_GATEWAYURL='<FILL-IN-HERE>'
+USER_EMAIL='<FILL-IN-HERE>'
+NEW_USERNAME='<FILL-IN-HERE>'
+TEMP_PASS='<FILL-IN-HERE>'
 ```
-- You can create a virtual environment with these commands going into your terminal:
-```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-- Within the IDE, create a file in the project simply called .env and create a line that has FLASK_SECRET_KEY=""
-- Next, go into the terminal and run the following commands:
-```
-python3 
-import secrets
-print(secrets.token_hex())
-```
-- A string of text should appear, copy and paste this string in between the quotation marks of FLASK_SECRET_KEY within your .env file
-
-- Next, reopen your terminal and cd into the directory, run the command:
-  ```
-  python server.py
-  ```
-
-- copy and paste the http://127.0.0.1:8000 into your favorite web browser 
-
-
-# AWS EC2 Instance Installation Tutorial
-
-### 1. Create a new EC2 instance
-If you haven't already, create a new EC2 instance on [Amazon Web Services](https://aws.amazon.com/?nc2=h_lg).
-
-Once created, `ssh` into the instance in a [Command Line Interface](https://en.wikipedia.org/wiki/Command-line_interface#:~:text=A%20command%2Dline%20interface%20\(CLI,interface%20available%20with%20punched%20cards.) with the following command:
-
-```
-ssh -i ~/.ssh/labsuser.pem ec2-user@<PUBLIC IPv4 ADDRESS HERE>
-```
-
-### 2. Clone the repo
-Once you are all set up, install `git` in the EC2 instance with the following command:
-
-```
-sudo yum install -y git
-```
-
-Afterwards, press the green **<> Code** button to gain a link to clone the repository.
-
-Then, in your Command Line Interface, clone the repository with the following command:
-
-```
-git clone https://github.com/cs399f24/MoraviYum_WebApp.git
-```
-
-### 3. Run `__`
-Now, enter the **`moraviyum_WebApp`** repository in the EC2 instance.
-
-Run the following command:
-
-```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements
-python server.py
-```
-
-Follow the instruction prompts given in the terminal. This will complete all the necessary set-up for the bot to run.
-
-### 4. Run the program
-The bot should now successfully be up and running on the EC2 instance!
 
