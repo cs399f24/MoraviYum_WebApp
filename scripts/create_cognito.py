@@ -75,7 +75,7 @@ append_to_env_file('APP_CLIENT_ID', app_client_id)
 # Configure a domain for the hosted UI
 cognito_client.create_user_pool_domain(
 
-    Domain='moraviyum-cloud-computing3',
+    Domain='<UNIQUE-COGNITO-DOMAIN-HERE>',
     UserPoolId=user_pool_id
 )
 print("Hosted UI domain configured")
