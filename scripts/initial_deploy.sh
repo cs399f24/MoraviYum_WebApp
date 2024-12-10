@@ -24,12 +24,12 @@ python3 create_api.py || { echo -e "${RED}API Gateway creation failed.${NC}"; ex
 echo -e "${GREEN}Creating API Gateway authorizers...${NC}"
 python3 create_authorizer.py || { echo -e "${RED}Authorizer creation failed.${NC}"; exit 1; }
 
-# Deploy Cognito resources
-echo -e "${GREEN}Creating Cognito resources...${NC}"
-python3 create_cognito.py || { echo -e "${RED}Cognito creation failed.${NC}"; exit 1; }
-
 # Deploy Amplify app
 echo -e "${GREEN}Creating Amplify app...${NC}"
 python3 create_amplify_app.py || { echo -e "${RED}Amplify app creation failed.${NC}"; exit 1; }
+
+# Deploy Cognito resources
+echo -e "${GREEN}Creating Cognito resources...${NC}"
+python3 create_cognito.py || { echo -e "${RED}Cognito creation failed.${NC}"; exit 1; }
 
 echo -e "${GREEN}AWS initial deployment completed successfully.${NC}"
