@@ -9,6 +9,12 @@ USER_EMAIL = os.getenv('USER_EMAIL')
 NEW_USERNAME = os.getenv('NEW_USERNAME')
 TEMP_PASS = os.getenv('TEMP_PASS')
 
+# Function to append a key-value pair to the .env file. This will be used for userpool id and client id
+def append_to_env_file(key, value):
+    env_file = '.env'
+    with open(env_file, 'a') as file:
+        file.write(f'\n{key}={value}')
+
 # Initialize the Cognito client
 cognito_client = boto3.client('cognito-idp', region_name='us-east-1')
 
@@ -41,6 +47,7 @@ response = cognito_client.create_user_pool(
 user_pool_id = response['UserPool']['Id']
 print(f"Created User Pool with ID: {user_pool_id}")
 
+append_to_env_file('USER_POOL_ID', user_pool_id)
 
 # Create an app client
 app_client_response = cognito_client.create_user_pool_client(
@@ -63,6 +70,7 @@ app_client_response = cognito_client.create_user_pool_client(
 app_client_id = app_client_response['UserPoolClient']['ClientId']
 print(f"Created App Client with ID: {app_client_id}")
 
+append_to_env_file('APP_CLIENT_ID', app_client_id)
 
 # Configure a domain for the hosted UI
 cognito_client.create_user_pool_domain(
