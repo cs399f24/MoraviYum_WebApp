@@ -50,12 +50,7 @@ app_client_response = cognito_client.create_user_pool_client(
     AllowedOAuthFlows=['implicit'],
     AllowedOAuthScopes=['email', 'openid'],
     AllowedOAuthFlowsUserPoolClient=True,
-<<<<<<< HEAD
-    CallbackURLs=[f'{AMPLIFY_DOMAIN}callback.html'],
-    LogoutURLs=[f'{AMPLIFY_DOMAIN}review.html'],
-=======
     CallbackURLs=[f'{AMPLIFY_DOMAIN}/callback.html'],
->>>>>>> 969d87c5f4f8f0011c97d5533d7e8dcf7bc5ab7a
     ExplicitAuthFlows=[
         'ALLOW_REFRESH_TOKEN_AUTH',
         'ALLOW_CUSTOM_AUTH',
