@@ -253,3 +253,10 @@ NEW_USERNAME='<FILL-IN-HERE>'
 TEMP_PASS='<FILL-IN-HERE>'
 ```
 
+### Undeploy/redeploy scripts
+In the **`scripts`** directory exist scripts to undeploy and redploy the Amplify app without destroying the other resources needed for the app. Should you feel the need to use them, while in the directory, run the following commands:
+
+```
+bash undeploy_amplify.sh
+bash redeploy.sh
+```
